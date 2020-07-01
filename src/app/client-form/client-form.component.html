@@ -1,0 +1,93 @@
+<div class="container">
+  <form role="form" [formGroup]="form" (ngSubmit)="add()">
+    <div class="row">
+   <div class="col">
+      <h4 class="">Add Client</h4>
+    </div>
+  </div>
+  <div class="row" *ngIf="message">
+    <div class="col">
+      <div class="alert alert-success alert-dismissible" role="alert">
+       Client was succesfully added.
+      </div>
+     </div>
+   </div>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="firstName">First name</label>
+        <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="fName" required>
+        <div class="invalid-feedback">
+          Valid first name is required.
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="lastName">Last name</label>
+        <input type="text" class="form-control" id="lastName" formControlName="lName" placeholder="Last Name"required>
+        <!-- <div class="invalid-feedback">
+          Valid last name is required.
+        </div> -->
+      </div>
+      <div class="col">
+        <label for="company">Company </label>
+        <input type="text" class="form-control" formControlName="company" placeholder="Company">
+      </div>
+      <div class="mb-3">
+        <label for="email">Email </label>
+        <input type="email" class="form-control" id="email" formControlName="email" placeholder="you@example.com">
+        <!-- <div class="invalid-feedback">
+          valid email address is required.
+        </div> -->
+      </div>
+      <div class="col">
+        <label for="phone">Phone </label>
+        <input type="text" class="form-control" formControlName="phone" placeholder="+1 (888) 888-8888">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col mb-3">
+        <label for="address">Address</label>
+        <input type="text" class="form-control" id="address" formControlName="address" placeholder="1234 Main St" required>
+        <!-- <div class="invalid-feedback">
+          Please enter your shipping address.
+        </div> -->
+      </div>
+      <div class="col mb-3">
+        <label for="country">City</label>
+        <input type="text" class="form-control" id="city" formControlName="city" required>
+        <!-- <div class="invalid-feedback">
+          Please select a valid city.
+        </div> -->
+      </div>
+      <div class="col mb-3">
+        <label for="state">State</label>
+        <select class="custom-select d-block w-100" id="state" formControlName="state" required>
+          <option selected disabled value="">Choose...</option>
+          <option *ngFor="let s of stateList" [value]="s.name"> {{s.name}} </option>
+        </select>
+        <!--  <select class="form-control" formControlName="size"
+              [ngClass]="{ 'is-invalid':submitted && f.size.invalid }">
+                <option selected disabled value="">Choose...</option>
+                <option *ngFor="let s of sizes" [value]="s"> {{s}} </option>
+            </select> -->
+        <!-- <div class="invalid-feedback">
+          Please provide a valid state.
+        </div> -->
+      </div>
+      <div class="col mb-3">
+        <label for="zip">Zip</label>
+        <input type="text" class="form-control" id="zip" formControlName="zip" placeholder="xxxxx" required>
+        <!-- <div class="invalid-feedback">
+          Zip code required.
+        </div> -->
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col">
+        <button class="ml-1 btn btn-primary">Add</button>
+      </div>
+    </div>
+  </form>
+</div>
+
