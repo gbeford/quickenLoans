@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { Utilities } from './utils';
-import {IClientList } from '../app/client-list-model';
+import { Utilities } from '../shared/utils';
+import {IClientList } from './client-list-model';
 
 @Injectable({
   providedIn: 'root'

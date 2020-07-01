@@ -1,8 +1,8 @@
-import { Client } from './../client-model';
+import { Client } from './client-model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AddressService } from '../address.service';
-import { IState } from '../state-model';
+import { StateService } from '../shared/state.service';
+import { IState } from './state-model';
 
 
 @Component({
@@ -16,7 +16,9 @@ export class ClientFormComponent implements OnInit {
   stateList: IState[];
   client: Client;
   message = false;
-  constructor(private formBuilder: FormBuilder, private addressService: AddressService) { }
+  submitted = false;
+
+  constructor(private formBuilder: FormBuilder, private addressService: StateService) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -33,32 +35,50 @@ export class ClientFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       fName: ['', Validators.required],
       lName: ['', Validators.required],
-      company: ['', [Validators.required as any]],
+      company: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.required as any]],
+      phone: ['', [Validators.required,
+      Validators.pattern('^(\\+?\\d{0,3}[ |-]{1})((\\(?\\d{3}\\)? ?)|(\\d{3}[ |-]?))?\\d{3}[ |-]\\d{4}$')]],
       address: ['', Validators.required],
       city: ['', Validators.required],
-      state: ['', [Validators.required as any]],
-      zip: ['', [Validators.required as any]],
+      state: ['', Validators.required],
+      zip: ['', [Validators.required, Validators.pattern('^\\d{5}(-\\d{4})?$')]],
     });
   }
 
-  add(): void {
-    if (this.form.valid) {
-      this.client = {
-        firstName: this.form.value.fName,
-        lastName: this.form.value.lName,
-        company: this.form.value.company,
-        email: this.form.value.email,
-        phone: this.form.value.phone,
-        address: this.form.value.address + ', ' + this.form.value.city + ', ' + this.form.value.state + ', ' + this.form.value.zip
-      };
-this.message = true;
-      console.log('New Client', JSON.stringify(this.client));
-      this.form.reset();
+  // convenience getter for easy access to form fields
+  get f(): any { return this.form.controls; }
+
+  addClient(): void {
+    this.submitted = true;
+
+    // stop here if form is invalid
+    if (this.form.invalid) {
+      return;
     }
+
+    this.client = this.addNewClient(this.form);
+    this.message = true;
+    console.log('New Client', JSON.stringify(this.client));
+    this.resetForm();
   }
 
+  addNewClient(form: FormGroup): Client {
+    const newClient = new Client();
 
+    newClient.firstName = form.value.fName;
+    newClient.lastName = form.value.lName;
+    newClient.company = form.value.company;
+    newClient.email = form.value.email;
+    newClient.phone = form.value.phone;
+    newClient.address = form.value.address + ', ' + form.value.city + ', ' + form.value.state + ', ' + form.value.zip;
+
+    return newClient;
+  }
+
+  resetForm(): void {
+    this.submitted = false;
+    this.form.reset();
+  }
 
 }

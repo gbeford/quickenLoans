@@ -1,7 +1,6 @@
 
 
 $placeholder: #cccccc;
-//#cccccc
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
   color: $placeholder;
@@ -24,3 +23,4 @@ $placeholder: #cccccc;
 ::placeholder { /* Most modern browsers support this now. */
   color: $placeholder;
 }
+
