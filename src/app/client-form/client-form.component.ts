@@ -33,6 +33,7 @@ export class ClientFormComponent implements OnInit {
 
   createForm(): void {
     this.form = this.formBuilder.group({
+      emp_ID: ['', [Validators.required, Validators.maxLength(8), Validators.minLength(8)]],
       fName: ['', Validators.required],
       lName: ['', Validators.required],
       company: ['', Validators.required],
@@ -66,6 +67,7 @@ export class ClientFormComponent implements OnInit {
   addNewClient(form: FormGroup): Client {
     const newClient = new Client();
 
+    newClient.emID = form.value.emp_ID;
     newClient.firstName = form.value.fName;
     newClient.lastName = form.value.lName;
     newClient.company = form.value.company;
